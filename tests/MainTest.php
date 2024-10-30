@@ -148,17 +148,17 @@ final class MainTest extends TestCase {
         }
 
         $this->withExceptionExpectation(function () {
-            Option::some("OK")->expectNone(fn() => "Expected ERROR");
+            Option::some("OK")->expectNone(fn() => "Expected NONE");
         }, function (\Throwable $e) {
             $this->assertInstanceOf(PanicException::class, $e);
-            $this->assertEquals("Expected ERROR", $e->getMessage());
+            $this->assertEquals("Expected NONE", $e->getMessage());
         });
 
         $this->withExceptionExpectation(function () {
-            Option::none()->expectSome(fn() => "Expected OK");
+            Option::none()->expectSome(fn() => "Expected SOME");
         }, function (\Throwable $e) {
             $this->assertInstanceOf(PanicException::class, $e);
-            $this->assertEquals("Expected OK", $e->getMessage());
+            $this->assertEquals("Expected SOME", $e->getMessage());
         });
     }
 
