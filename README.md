@@ -26,7 +26,25 @@ composer require tekord/php-option
 Example:
 
 ```php
-TBD
+$o = Option::some(200);
+$value = $o->unwrap(); // -> 200
+
+$o = Option::none();
+$value = $o->unwrap(); // -> ERROR
+
+$o = Option::none();
+$value = $o->unwrapOrDefault(50); // -> 50
+
+$o = Option::none();
+$value = $o->unwrapOrNull(); // -> null
+
+$o = Option::some("Hello");
+$o->isSome(); // true
+$o->isNone(); // false
+
+$o = Option::none();
+$o->isSome(); // false
+$o->isNone(); // true
 ```
 
 ## Testing
