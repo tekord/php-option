@@ -161,4 +161,54 @@ final class MainTest extends TestCase {
             $this->assertEquals("Expected OK", $e->getMessage());
         });
     }
+
+    public function testFilterMethod() {
+        $predicate1 = fn($value) => $value > 100;
+        $predicate2 = fn($value) => $value < 100;
+
+        {
+            $o = Option::some(120);
+
+            $o1 = $o->filter($predicate1);
+            $this->assertTrue($o1->isSome());
+            $this->assertEquals(120, $o1->unwrap());
+
+            $o2 = $o->filter($predicate2);
+            $this->assertTrue($o2->isNone());
+        }
+
+        {
+            $o = Option::none();
+
+            $o1 = $o->filter($predicate1);
+            $this->assertTrue($o1->isNone());
+
+            $o2 = $o->filter($predicate2);
+            $this->assertTrue($o2->isNone());
+        }
+    }
+
+    public function testTapMethod() {
+        {
+            $wasTapped = false;
+
+            Option::some("OK")
+                ->tap(function () use (&$wasTapped) {
+                    return $wasTapped = true;
+                });
+
+            $this->assertTrue($wasTapped);
+        }
+
+        {
+            $wasTapped = false;
+
+            Option::none()
+                ->tap(function () use (&$wasTapped) {
+                    return $wasTapped = true;
+                });
+
+            $this->assertTrue($wasTapped);
+        }
+    }
 }
