@@ -31,4 +31,17 @@ trait FactoryMethods {
 
         return $option;
     }
+
+    /**
+     * @return static<TValue>
+     */
+    public static function from($value): static {
+        $option = new static();
+
+        $option->_value = $value === null
+            ? None::getInstance()
+            : $value;
+
+        return $option;
+    }
 }

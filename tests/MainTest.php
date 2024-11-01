@@ -30,6 +30,22 @@ final class MainTest extends TestCase {
         $this->assertEquals(None::getInstance(), $o->value);
     }
 
+    public function testFromMethod() {
+        {
+            $o = Option::from("Hello");
+
+            $this->assertTrue($o->isSome());
+            $this->assertFalse($o->isNone());
+        }
+
+        {
+            $o = Option::from(null);
+
+            $this->assertFalse($o->isSome());
+            $this->assertTrue($o->isNone());
+        }
+    }
+
     public function testUnwrapMethods() {
         $o = Option::some("OK");
         $this->assertEquals("OK", $o->unwrap());
