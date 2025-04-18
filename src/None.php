@@ -3,7 +3,9 @@
 namespace Tekord\Option;
 
 /**
- * @extends Option<null>
+ * @template TValue
+ *
+ * @extends Option<TValue>
  */
 class None extends Option {
     private function __construct() {
