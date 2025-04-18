@@ -2,7 +2,10 @@
 
 namespace Tekord\Option;
 
-final class None {
+/**
+ * @extends Option<null>
+ */
+class None extends Option {
     private function __construct() {
     }
 

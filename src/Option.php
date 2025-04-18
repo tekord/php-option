@@ -2,40 +2,60 @@
 
 namespace Tekord\Option;
 
-use Tekord\Option\Concerns\FactoryMethods;
 use Tekord\Option\Concerns\OptionMethods;
 use Tekord\Option\Concerns\PanicAware;
 
 /**
  * @template TValue
  *
- * @property-read TValue $value
- *
- * @implements OptionInterface<TValue>
- *
- * @mixin FactoryMethods<TValue>
  * @mixin OptionMethods<TValue>
- *
- * @author Cyrill Tekord
  */
-class Option implements OptionInterface {
+abstract class Option {
     use PanicAware;
-    use FactoryMethods;
     use OptionMethods;
 
-    /** @var TValue|None */
-    protected $_value;
-
-    /** @inheritDoc */
-    public function isSome() {
-        return !$this->_value instanceof None;
+    /**
+     * @param TValue $value
+     *
+     * @return Some<TValue>
+     */
+    public static function some($value): Some {
+        return new Some($value);
     }
 
-    /** @inheritDoc */
-    public function isNone() {
-        return $this->_value instanceof None;
+    /**
+     * @return None
+     */
+    public static function none(): None {
+        return None::getInstance();
     }
 
-    protected function __construct() {
+    /**
+     * @return static<TValue>
+     */
+    public static function from($value): static {
+        return $value === null
+            ? static::none()
+            : static::some($value);
+    }
+
+    // -
+
+    /**
+     * Indicates whether the option is SOME.
+     *
+     * @return bool
+     */
+    public function isSome(): bool {
+        return $this instanceof Some;
+    }
+
+    /**
+     * Indicates whether the option is NONE.
+     *
+     * @return bool
+     */
+    public function isNone(): bool {
+        return $this instanceof None;
     }
 }

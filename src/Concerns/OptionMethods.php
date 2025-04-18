@@ -3,27 +3,15 @@
 namespace Tekord\Option\Concerns;
 
 use Tekord\Option\Option;
-use Tekord\Option\OptionInterface;
 
 /**
  * @template TValue
  *
  * @property-read TValue $value
  *
- * @mixin OptionInterface<TValue>
  * @mixin PanicAware
- *
- * @author Cyrill Tekord
  */
 trait OptionMethods {
-    public function __get(string $name) {
-        if ($name === 'value') {
-            return $this->_value;
-        }
-
-        throw new \Exception('Invalid property: ' . $name . '. Class ' . static::class . ' provides only "value" property');
-    }
-
     /**
      * Returns the contained value, or panics if NONE.
      *
@@ -33,7 +21,7 @@ trait OptionMethods {
         if ($this->isNone())
             static::panic("Called `Option::unwrap` on a `None` value");
 
-        return $this->_value;
+        return $this->value;
     }
 
     /**
@@ -49,7 +37,7 @@ trait OptionMethods {
         if ($this->isNone())
             return $default;
 
-        return $this->_value;
+        return $this->value;
     }
 
     /**
@@ -65,7 +53,7 @@ trait OptionMethods {
         if ($this->isNone())
             return $valueRetriever();
 
-        return $this->_value;
+        return $this->value;
     }
 
     /**
@@ -82,11 +70,11 @@ trait OptionMethods {
      *
      * @param callable(TValue): TMappedValue $mapper
      *
-     * @return static<TValue>
+     * @return static<TMappedValue>
      */
     public function map(callable $mapper) {
         if ($this->isSome())
-            return static::some($mapper($this->_value));
+            return static::some($mapper($this->value));
 
         return static::none();
     }
@@ -106,7 +94,7 @@ trait OptionMethods {
         if ($this->isNone())
             return $default;
 
-        return $mapper($this->_value);
+        return $mapper($this->value);
     }
 
     /**
@@ -119,12 +107,12 @@ trait OptionMethods {
      * @param callable(): TDefaultValue $valueRetriever
      *
      * @return TMappedValue|TDefaultValue
-    */
+     */
     public function mapOrElse(callable $mapper, callable $valueRetriever) {
         if ($this->isNone())
             return $valueRetriever();
 
-        return $mapper($this->_value);
+        return $mapper($this->value);
     }
 
     /**
@@ -136,7 +124,7 @@ trait OptionMethods {
      */
     public function whenSome(callable $callback) {
         if ($this->isSome())
-            $callback($this->_value);
+            $callback($this->value);
 
         return $this;
     }
@@ -164,7 +152,7 @@ trait OptionMethods {
      */
     public function expectSome(callable $callback) {
         if ($this->isSome())
-            return $this->_value;
+            return $this->value;
 
         static::panic($callback());
     }
@@ -192,8 +180,8 @@ trait OptionMethods {
         if ($this->isNone())
             return static::none();
 
-        return $predicate($this->_value)
-            ? static::some($this->_value)
+        return $predicate($this->value)
+            ? static::some($this->value)
             : static::none();
     }
 

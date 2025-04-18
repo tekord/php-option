@@ -2,7 +2,6 @@
 
 namespace Tekord\Option\Tests;
 
-use Tekord\Option\None;
 use Tekord\Option\Option;
 use Tekord\Option\PanicException;
 
@@ -26,8 +25,6 @@ final class MainTest extends TestCase {
 
         $this->assertFalse($o->isSome());
         $this->assertTrue($o->isNone());
-
-        $this->assertEquals(None::getInstance(), $o->value);
     }
 
     public function testFromMethod() {
