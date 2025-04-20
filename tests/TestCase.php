@@ -2,9 +2,6 @@
 
 namespace Tekord\Option\Tests;
 
-/**
- * @author Cyrill Tekord
- */
 abstract class TestCase extends \PHPUnit\Framework\TestCase {
     protected function withExceptionExpectation(
         callable $callback,

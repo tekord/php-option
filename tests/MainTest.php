@@ -7,8 +7,6 @@ use Tekord\Option\PanicException;
 
 /**
  * @runTestsInSeparateProcesses
- *
- * @author Cyrill Tekord
  */
 final class MainTest extends TestCase {
     public function testSome() {
@@ -205,22 +203,24 @@ final class MainTest extends TestCase {
         {
             $wasTapped = false;
 
-            Option::some("OK")
+            $option = Option::some("OK")
                 ->tap(function () use (&$wasTapped) {
-                    return $wasTapped = true;
+                    $wasTapped = true;
                 });
 
+            $this->assertTrue($option->isSome());
             $this->assertTrue($wasTapped);
         }
 
         {
             $wasTapped = false;
 
-            Option::none()
+            $option = Option::none()
                 ->tap(function () use (&$wasTapped) {
-                    return $wasTapped = true;
+                    $wasTapped = true;
                 });
 
+            $this->assertTrue($option->isNone());
             $this->assertTrue($wasTapped);
         }
     }
