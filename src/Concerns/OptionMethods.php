@@ -70,7 +70,7 @@ trait OptionMethods {
      *
      * @param callable(TValue): TMappedValue $mapper
      *
-     * @return static<TMappedValue>
+     * @return static<TMappedValue>|Option<TMappedValue>
      */
     public function map(callable $mapper) {
         if ($this->isSome())
