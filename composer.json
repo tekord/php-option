@@ -29,7 +29,10 @@
     "autoload": {
         "psr-4": {
             "Tekord\\Option\\": "src"
-        }
+        },
+        "files": [
+            "src/stubs.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

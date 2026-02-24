@@ -19,6 +19,7 @@ abstract class Option {
      *
      * @return Some<TValue>
      */
+    #[\NoDiscard]
     public static function some($value): Some {
         return new Some($value);
     }
@@ -26,6 +27,7 @@ abstract class Option {
     /**
      * @return None
      */
+    #[\NoDiscard]
     public static function none(): None {
         return None::getInstance();
     }
@@ -33,6 +35,7 @@ abstract class Option {
     /**
      * @return static<TValue>
      */
+    #[\NoDiscard]
     public static function from($value): static {
         return $value === null
             ? static::none()
