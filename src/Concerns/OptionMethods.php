@@ -185,7 +185,6 @@ trait OptionMethods {
             : static::none();
     }
 
-
     /**
      * @param callable(static): void $callback
      *

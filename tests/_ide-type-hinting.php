@@ -7,33 +7,51 @@ use Tekord\Option\Option;
 use Tekord\Option\Tests\Classes\BookDto;
 use Tekord\Option\Tests\Classes\PersonDto;
 
-$person = Option::some(new PersonDto());
+{
+    $person = Option::some(new PersonDto());
 
-//                  |
-//                  V - put your cursor here
-$it = $person->value;
-
-//                       |
-//                       V - put your cursor here
-$it = $person->getValue();
-
-$book = Option::some(new BookDto());
-
-//                   |
-//                   V - put your cursor here
-$it = $book->unwrap();
-
-// ---
-
-$anotherPerson = Option::none();
-
-//                                                    |
-//                                                    V - put your cursor here
-$it = $anotherPerson->unwrapOrDefault(new PersonDto());
-
-/** @return Option<PersonDto> */
-function getPerson() {
-    return Option::none();
+    //                       |
+    //                       V - put your cursor here
+    $it = $person->getValue();
 }
 
-$it = getPerson();
+{
+    $book = Option::some(new BookDto());
+
+    //                   |
+    //                   V - put your cursor here
+    $it = $book->unwrap();
+}
+
+{
+    $maybePerson = Option::none();
+
+    //                                                  |
+    //                                                  V - put your cursor here
+    $it = $maybePerson->unwrapOrDefault(new PersonDto());
+}
+
+{
+    $maybeBook = Option::none();
+
+    //                                              |
+    //                                              V - put your cursor here
+    $it = $maybeBook->unwrapOrDefault(new BookDto());
+}
+
+{
+    $anotherPerson = Option::some(new PersonDto());
+
+    //                         |
+    //                         V - put your cursor here
+    $it = $anotherPerson->value;
+}
+
+{
+    /** @return Option<PersonDto> */
+    function getPerson() {
+        return Option::none();
+    }
+
+    $it = getPerson();
+}
