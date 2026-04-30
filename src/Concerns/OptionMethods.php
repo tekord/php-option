@@ -70,7 +70,7 @@ trait OptionMethods {
      *
      * @param callable(TValue): TMappedValue $mapper
      *
-     * @return static<TMappedValue>|Option<TMappedValue>
+     * @return Option<TMappedValue>
      */
     public function map(callable $mapper) {
         if ($this->isSome())
@@ -83,12 +83,11 @@ trait OptionMethods {
      * Returns the contained value passed through the mapper, or the default value if NONE.
      *
      * @template TMappedValue
-     * @template TDefaultValue
      *
      * @param callable(TValue): TMappedValue $mapper
-     * @param TDefaultValue $default
+     * @param TMappedValue $default
      *
-     * @return TMappedValue|TDefaultValue
+     * @return TMappedValue
      */
     public function mapOrDefault(callable $mapper, $default) {
         if ($this->isNone())
@@ -101,12 +100,11 @@ trait OptionMethods {
      * Returns the contained value passed through the mapper, or a value provided by the callback if NONE.
      *
      * @template TMappedValue
-     * @template TDefaultValue
      *
      * @param callable(TValue): TMappedValue $mapper
-     * @param callable(): TDefaultValue $valueRetriever
+     * @param callable(): TMappedValue $valueRetriever
      *
-     * @return TMappedValue|TDefaultValue
+     * @return TMappedValue
      */
     public function mapOrElse(callable $mapper, callable $valueRetriever) {
         if ($this->isNone())
